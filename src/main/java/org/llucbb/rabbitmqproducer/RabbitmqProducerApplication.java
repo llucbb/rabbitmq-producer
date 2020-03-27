@@ -27,8 +27,9 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
     public void run(String... args) {
         //hello message
         helloRabbitProducerService.sendHello("Lucas " + Math.random());
+
         //employee JSON message
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             var e = Employee.builder()
                     .id("emp" + i)
                     .name("Employee " + i)
