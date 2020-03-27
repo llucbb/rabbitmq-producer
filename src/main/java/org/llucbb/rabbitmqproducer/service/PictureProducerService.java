@@ -17,7 +17,7 @@ public class PictureProducerService {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    //fanout exchange to accounting and marketing queues
+    //direct exchange to picture image and vector queues
     public void sendMessage(Picture picture) {
         try {
             var json = objectMapper.writeValueAsString(picture);
