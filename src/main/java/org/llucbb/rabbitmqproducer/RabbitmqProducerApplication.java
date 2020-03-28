@@ -92,6 +92,17 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
                     .source(SOURCES.get(i % SOURCES.size()))
                     .type(TYPES.get(i % TYPES.size()))
                     .build();
+            //myPictureProducerService.sendMessage(picture);
+        }
+
+        // Dead letter exchange using Message/Channel at consumer
+        for (int i = 0; i < 10; i++) {
+            var picture = Picture.builder()
+                    .name("Picture " + i)
+                    .size(ThreadLocalRandom.current().nextLong(1, 10001))
+                    .source(SOURCES.get(i % SOURCES.size()))
+                    .type(TYPES.get(i % TYPES.size()))
+                    .build();
             myPictureProducerService.sendMessage(picture);
         }
 
