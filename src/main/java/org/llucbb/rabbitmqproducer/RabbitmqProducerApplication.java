@@ -7,6 +7,7 @@ import org.llucbb.rabbitmqproducer.model.Picture;
 import org.llucbb.rabbitmqproducer.service.EmployeeProducerService;
 import org.llucbb.rabbitmqproducer.service.HelloRabbitProducerService;
 import org.llucbb.rabbitmqproducer.service.HumanResourceProducerService;
+import org.llucbb.rabbitmqproducer.service.MyPictureProducerService;
 import org.llucbb.rabbitmqproducer.service.PictureProducerService;
 import org.llucbb.rabbitmqproducer.service.PictureTwoProducerService;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +28,7 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
     private final HumanResourceProducerService humanResourceProducerService;
     private final PictureProducerService pictureProducerService;
     private final PictureTwoProducerService pictureTwoProducerService;
+    private final MyPictureProducerService myPictureProducerService;
 
     private final static List<String> SOURCES = List.of("mobile", "web");
     private final static List<String> TYPES = List.of("jpg", "png", "svg");
@@ -79,7 +81,18 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
                     .source(SOURCES.get(i % SOURCES.size()))
                     .type(TYPES.get(i % TYPES.size()))
                     .build();
-            pictureTwoProducerService.sendMessage(picture);
+            //pictureTwoProducerService.sendMessage(picture);
+        }
+
+        // Dead letter exchange
+        for (int i = 0; i < 1; i++) {
+            var picture = Picture.builder()
+                    .name("Picture " + i)
+                    .size(ThreadLocalRandom.current().nextLong(9001, 10001))
+                    .source(SOURCES.get(i % SOURCES.size()))
+                    .type(TYPES.get(i % TYPES.size()))
+                    .build();
+            myPictureProducerService.sendMessage(picture);
         }
 
         System.exit(1);
