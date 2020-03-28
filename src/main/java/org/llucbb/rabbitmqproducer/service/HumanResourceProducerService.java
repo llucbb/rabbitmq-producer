@@ -15,16 +15,13 @@ public class HumanResourceProducerService {
 
     private final RabbitTemplate rabbitTemplate;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    //fanout exchange to accounting and marketing queues
-    public void sendMessage(Employee employee) {
-        try {
-            var json = objectMapper.writeValueAsString(employee);
-            rabbitTemplate.convertAndSend("x.hr", "", json);
-        } catch (JsonProcessingException e) {
-            log.error(e.getMessage(), e);
-        }
-
+    /**
+     * Fanout exchange to accounting and marketing queues
+     */
+    public void sendMessage(Employee employee) throws JsonProcessingException {
+        var json = objectMapper.writeValueAsString(employee);
+        rabbitTemplate.convertAndSend("x.hr", "", json);
     }
 }

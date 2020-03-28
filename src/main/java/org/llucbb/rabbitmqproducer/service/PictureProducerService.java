@@ -15,9 +15,11 @@ public class PictureProducerService {
 
     private final RabbitTemplate rabbitTemplate;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    //direct exchange to picture image and vector queues
+    /**
+     * Direct exchange to picture image and vector queues
+     */
     public void sendMessage(Picture picture) {
         try {
             var json = objectMapper.writeValueAsString(picture);
