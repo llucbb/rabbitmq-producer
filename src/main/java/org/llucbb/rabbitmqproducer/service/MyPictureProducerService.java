@@ -18,9 +18,9 @@ public class MyPictureProducerService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Fanout exchange to q.mypicture.image with a dead letter exchange to q.mypicture.dlx, in order to handle errors at
-     * consumer. When the consumer throws AmqpRejectAndDontRequeueException the message will be removed from
-     * q.mypicture-image and queued into q.mypicture.dlx for further error processing.
+     * Fanout exchange to q.mypicture.image with a dead letter exchange (x-dead-letter-exchange) to q.mypicture.dlx, in
+     * order to handle errors at consumer. When the consumer throws AmqpRejectAndDontRequeueException the message will
+     * be removed from q.mypicture-image and queued into q.mypicture.dlx for further error processing.
      */
     public void sendMessage(Picture picture) throws JsonProcessingException {
         var json = objectMapper.writeValueAsString(picture);
