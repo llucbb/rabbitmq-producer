@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.llucbb.rabbitmqproducer.model.Employee;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +19,4 @@ public class RetryEmployeeProducerService {
         var json = objectMapper.writeValueAsString(emp);
         rabbitTemplate.convertAndSend("x.guideline2.work", "", json);
     }
-
 }

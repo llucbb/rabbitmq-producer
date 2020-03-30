@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 public class CustomLocalDateSerializer extends StdSerializer<LocalDate> {
 
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
 
     public CustomLocalDateSerializer() {
         this(null);
@@ -22,6 +22,6 @@ public class CustomLocalDateSerializer extends StdSerializer<LocalDate> {
 
     @Override
     public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider arg2) throws IOException {
-        gen.writeString(formatter.format(value));
+        gen.writeString(DATE_TIME_FORMATTER.format(value));
     }
 }

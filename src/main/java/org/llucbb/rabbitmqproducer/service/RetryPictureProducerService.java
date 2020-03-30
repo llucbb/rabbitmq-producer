@@ -18,8 +18,8 @@ public class RetryPictureProducerService {
     /**
      * Direct exchange to:
      * <ul>
-     * <li>q.quideline.image.work for routingKey=*.*.jpg or *.*.png</li>
-     * <li>q.quideline.vector.work for routingKey=*.*.svg</li>
+     * <li>q.guideline.image.work for routingKey=*.*.jpg or *.*.png</li>
+     * <li>q.guideline.vector.work for routingKey=*.*.svg</li>
      * </ul>
      * Where routingKey=source.size.type of the picture
      */
