@@ -15,6 +15,14 @@ public class RetryPictureProducerService {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    /**
+     * Direct exchange to:
+     * <ul>
+     * <li>q.quideline.image.work for routingKey=*.*.jpg or *.*.png</li>
+     * <li>q.quideline.vector.work for routingKey=*.*.svg</li>
+     * </ul>
+     * Where routingKey=source.size.type of the picture
+     */
     public void sendMessage(Picture picture) throws JsonProcessingException {
         var json = objectMapper.writeValueAsString(picture);
         rabbitTemplate.convertAndSend("x.guideline.work", picture.getType(), json);
