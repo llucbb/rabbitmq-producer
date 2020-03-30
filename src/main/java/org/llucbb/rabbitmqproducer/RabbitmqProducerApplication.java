@@ -10,6 +10,7 @@ import org.llucbb.rabbitmqproducer.service.HumanResourceProducerService;
 import org.llucbb.rabbitmqproducer.service.MyPictureProducerService;
 import org.llucbb.rabbitmqproducer.service.PictureProducerService;
 import org.llucbb.rabbitmqproducer.service.PictureTwoProducerService;
+import org.llucbb.rabbitmqproducer.service.RetryEmployeeProducerService;
 import org.llucbb.rabbitmqproducer.service.RetryPictureProducerService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,6 +32,7 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
     private final PictureTwoProducerService pictureTwoProducerService;
     private final MyPictureProducerService myPictureProducerService;
     private final RetryPictureProducerService retryPictureProducerService;
+    private final RetryEmployeeProducerService retryEmployeeProducerService;
 
     private final static List<String> SOURCES = List.of("mobile", "web");
     private final static List<String> TYPES = List.of("jpg", "png", "svg");
@@ -108,6 +110,7 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
             //myPictureProducerService.sendMessage(picture);
         }
 
+        // Retry Mechanism for Direct Exchange
         for (int i = 0; i < 10; i++) {
             var picture = Picture.builder()
                     .name("Picture " + i)
@@ -115,7 +118,17 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
                     .source(SOURCES.get(i % SOURCES.size()))
                     .type(TYPES.get(i % TYPES.size()))
                     .build();
-            retryPictureProducerService.sendMessage(picture);
+            //retryPictureProducerService.sendMessage(picture);
+        }
+
+        // Retry Mechanism for Fanout Exchange
+        for (int i = 0; i < 10; i++) {
+            Employee emp = Employee.builder()
+                    .id("emp" + i)
+                    .name(null)
+                    .birthDate(LocalDate.now())
+                    .build();
+            retryEmployeeProducerService.sendMessage(emp);
         }
 
         System.exit(1);
