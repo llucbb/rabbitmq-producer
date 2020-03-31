@@ -12,6 +12,7 @@ import org.llucbb.rabbitmqproducer.service.PictureProducerService;
 import org.llucbb.rabbitmqproducer.service.PictureTwoProducerService;
 import org.llucbb.rabbitmqproducer.service.RetryEmployeeProducerService;
 import org.llucbb.rabbitmqproducer.service.RetryPictureProducerService;
+import org.llucbb.rabbitmqproducer.service.SpringRetryPictureProducerService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,6 +35,7 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
     private final MyPictureProducerService myPictureProducerService;
     private final RetryPictureProducerService retryPictureProducerService;
     private final RetryEmployeeProducerService retryEmployeeProducerService;
+    private final SpringRetryPictureProducerService springRetryPictureProducerService;
 
     private final static List<String> SOURCES = List.of("mobile", "web");
     private final static List<String> TYPES = List.of("jpg", "png", "svg");
@@ -130,6 +132,17 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
                     .birthDate(LocalDate.now())
                     .build();
             //retryEmployeeProducerService.sendMessage(emp);
+        }
+
+        // Spring Retry Mechanism for Direct Exchange
+        for (int i = 0; i < 10; i++) {
+            var picture = Picture.builder()
+                    .name("Picture " + i)
+                    .size(ThreadLocalRandom.current().nextLong(9001, 10001))
+                    .source(SOURCES.get(i % SOURCES.size()))
+                    .type(TYPES.get(i % TYPES.size()))
+                    .build();
+            springRetryPictureProducerService.sendMessage(picture);
         }
     }
 }
