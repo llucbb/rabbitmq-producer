@@ -15,13 +15,14 @@ import org.llucbb.rabbitmqproducer.service.RetryPictureProducerService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @SpringBootApplication
-//@EnableScheduling
+@EnableScheduling
 @RequiredArgsConstructor
 public class RabbitmqProducerApplication implements CommandLineRunner {
 
