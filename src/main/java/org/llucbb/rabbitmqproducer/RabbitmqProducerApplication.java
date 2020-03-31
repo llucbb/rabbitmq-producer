@@ -128,9 +128,7 @@ public class RabbitmqProducerApplication implements CommandLineRunner {
                     .name(null)
                     .birthDate(LocalDate.now())
                     .build();
-            retryEmployeeProducerService.sendMessage(emp);
+            //retryEmployeeProducerService.sendMessage(emp);
         }
-
-        System.exit(1);
     }
 }
